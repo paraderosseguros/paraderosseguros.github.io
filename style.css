@@ -21,3 +21,6 @@
 
 /* Consulta de participantes */
 .clear-lookup{display:block;margin:12px auto 0;min-height:44px;padding:8px 16px;background:transparent;border:1px solid #8296a8;border-radius:8px;color:#00274c;font:inherit;cursor:pointer}.clear-lookup:hover{background:#edf3f8}.primary:disabled{opacity:.65;cursor:wait}.lookup-card p,.result p{font-size:1rem}.lookup-card label,.input-help,.small-note{font-size:.875rem!important}.result[hidden]{display:none}.result a{overflow-wrap:anywhere}.lookup-card input:focus-visible,.lookup-card button:focus-visible{outline:3px solid #2974aa;outline-offset:3px}
+
+/* Contactos del equipo y comité de ética */
+.contact-expanded{display:block}.contact-expanded .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:28px}.contact-expanded h3{font-size:18px;margin:0 0 12px}.contact-expanded p{font-size:16px;line-height:1.65;margin:0 0 12px}.contact-expanded a{color:var(--navy);text-underline-offset:3px;overflow-wrap:anywhere}.ethics-contact{border-top:1px solid var(--line);padding-top:24px;margin-top:24px;max-width:850px}@media(max-width:700px){.contact-expanded .contact-grid{grid-template-columns:1fr;gap:20px}.contact-expanded h3{font-size:17px}}
