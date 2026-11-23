@@ -8,9 +8,14 @@
   const updated = document.querySelector('#last-update');
   const survey = document.body.dataset.survey;
   const target = survey === 'censo' ? 150 : 100;
+  const ticketTerm = survey === 'qr' ? 'código' : 'número';
   let request = 0;
   let controller;
-  const normalize = code => code.trim().toUpperCase();
+  const normalize = code => {
+    const raw = code.trim().toUpperCase();
+    const compact = raw.replace(/[\s-]/g, '');
+    return survey === 'qr' && /^[A-HJ-NP-Z2-9]{8}$/.test(compact) ? compact : raw;
+  };
   const date = value => new Intl.DateTimeFormat('es-PE', {dateStyle:'long', timeStyle:'short', timeZone:'America/Lima'}).format(new Date(value)) + ' (hora de Perú)';
   function add(tag, text) {
     const node = document.createElement(tag); node.textContent = text; result.append(node); return node;
@@ -25,8 +30,8 @@
     event.preventDefault(); clear();
     const code = normalize(input.value);
     if (!code) {
-      result.hidden = false; add('h3', 'Escribe tu número de participación');
-      add('p', 'Usa el número que recibiste al terminar la encuesta.'); input.setAttribute('aria-invalid','true'); input.focus(); return;
+      result.hidden = false; add('h3', `Escribe tu ${ticketTerm} de participación`);
+      add('p', survey === 'qr' ? 'Usa el código que guardaste al completar el registro del sorteo.' : 'Usa el número que recibiste al terminar la encuesta.'); input.setAttribute('aria-invalid','true'); input.focus(); return;
     }
     const current = request;
     controller = new AbortController();
@@ -47,9 +52,9 @@
       } else { updated.hidden = true; }
       const groupId = data.tickets[key];
       if (!groupId) {
-        add('h3','Número no encontrado en este corte');
-        add('p','Revisa que hayas escrito tu número completo y que estés en la página de la encuesta en la que participaste. Si acabas de responder, vuelve a consultar después de la próxima actualización diaria.');
-        add('p','Que tu número aún no aparezca no significa que hayas quedado fuera del sorteo. Si el problema continúa, comunícate con el equipo al 942 221 567.');
+        add('h3', survey === 'qr' ? 'Código no encontrado en este corte' : 'Número no encontrado en este corte');
+        add('p',`Revisa que hayas escrito tu ${ticketTerm} completo y que estés en la página de la encuesta en la que participaste. Si acabas de responder, vuelve a consultar después de la próxima actualización diaria.`);
+        add('p',`Que tu ${ticketTerm} aún no aparezca no significa que hayas quedado fuera del sorteo. Si el problema continúa, comunícate con el equipo al 942 221 567.`);
         return;
       }
       const group = data.groups[groupId];
@@ -70,8 +75,8 @@
           }
         }
       } else {
-        add('h3', normalize(group.winner) === code ? '¡Tu número ganó S/100!' : 'Resultado del sorteo');
-        add('p', `Número ganador: ${group.winner}`);
+        add('h3', normalize(group.winner) === code ? `¡Tu ${ticketTerm} ganó S/100!` : 'Resultado del sorteo');
+        add('p', `${survey === 'qr' ? 'Código' : 'Número'} ganador: ${group.winner}`);
         if (group.drawn_at) add('p','Sorteo realizado: ' + date(group.drawn_at));
         add('p', normalize(group.winner) === code ? 'El equipo te contactará al celular que registraste. Tienes 14 días calendario desde el primer aviso para responder. El pago se realiza por Yape o transferencia.' : 'El equipo contactará a la persona ganadora al celular registrado en la encuesta.');
       }
