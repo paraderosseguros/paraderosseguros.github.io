@@ -1,7 +1,14 @@
 {
   "schema": 1,
   "survey": "qr",
-  "updated_at": "2026-11-25T16:46:31-05:00",
-  "tickets": {},
-  "groups": {}
+  "updated_at": "2026-11-25T16:58:12-05:00",
+  "tickets": {
+    "c49d4e67199462c3ea9994710e50a1a9ac82bb1272df97ea5ea0b11e8818a9ec": "QR-0001"
+  },
+  "groups": {
+    "QR-0001": {
+      "count": 1,
+      "state": "preparacion"
+    }
+  }
 }
