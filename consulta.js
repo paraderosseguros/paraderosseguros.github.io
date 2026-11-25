@@ -31,7 +31,7 @@
     const code = normalize(input.value);
     if (!code) {
       result.hidden = false; add('h3', `Escribe tu ${ticketTerm} de participación`);
-      add('p', survey === 'qr' ? 'Usa el código que guardaste al completar el registro del sorteo.' : 'Usa el número que recibiste al terminar la encuesta.'); input.setAttribute('aria-invalid','true'); input.focus(); return;
+      add('p', survey === 'qr' ? 'Usa el código que guardaste al finalizar la encuesta QR.' : 'Usa el número que recibiste al terminar la encuesta.'); input.setAttribute('aria-invalid','true'); input.focus(); return;
     }
     const current = request;
     controller = new AbortController();
@@ -53,7 +53,7 @@
       const groupId = data.tickets[key];
       if (!groupId) {
         add('h3', survey === 'qr' ? 'Código no encontrado en este corte' : 'Número no encontrado en este corte');
-        add('p',`Revisa que hayas escrito tu ${ticketTerm} completo y que estés en la página de la encuesta en la que participaste. Si acabas de responder, vuelve a consultar después de la próxima actualización diaria.`);
+        add('p',`Revisa que hayas escrito tu ${ticketTerm} completo y que estés en la página de la encuesta en la que participaste. Si acabas de responder, vuelve a consultar después de ${survey === 'qr' ? 'la próxima actualización del registro' : 'la próxima actualización diaria'}.`);
         add('p',`Que tu ${ticketTerm} aún no aparezca no significa que hayas quedado fuera del sorteo. Si el problema continúa, comunícate con el equipo al 942 221 567.`);
         return;
       }
