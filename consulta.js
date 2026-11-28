@@ -53,18 +53,25 @@
       const groupId = data.tickets[key];
       if (!groupId) {
         add('h3', survey === 'qr' ? 'Código no encontrado en este corte' : 'Número no encontrado en este corte');
-        add('p',`Revisa que hayas escrito tu ${ticketTerm} completo y que estés en la página de la encuesta en la que participaste. Si acabas de responder, vuelve a consultar después de ${survey === 'qr' ? 'la próxima actualización del registro' : 'la próxima actualización diaria'}.`);
+        add('p',`Revisa que hayas escrito tu ${ticketTerm} completo y que estés en la página de la encuesta en la que participaste. Si acabas de responder, vuelve a consultar después de la próxima actualización del registro.`);
         add('p',`Que tu ${ticketTerm} aún no aparezca no significa que hayas quedado fuera del sorteo. Si el problema continúa, comunícate con el equipo al 942 221 567.`);
         return;
       }
       const group = data.groups[groupId];
       if (!group || !['preparacion','programado','resultado'].includes(group.state)) throw new Error('invalid group');
       add('h3', 'Tu participación está registrada');
-      add('p', `Grupo ${groupId} · ${group.count} de ${target} personas registradas`);
+      const groupLabel = survey === 'censo' && /^CENSO-\d{4}$/.test(groupId) ? Number(groupId.slice(-4)) : groupId;
+      add('p', `Grupo ${groupLabel} · ${group.count} de ${target} personas registradas`);
       const bar = document.createElement('progress'); bar.max = target; bar.value = group.count; bar.setAttribute('aria-label', 'Personas registradas en tu grupo'); result.append(bar);
       if (group.state === 'preparacion') {
-        add('h3','Tu grupo se está formando');
-        add('p','Publicaremos la fecha del sorteo cuando se complete el grupo. Al finalizar el estudio, el último grupo también participará por S/100 aunque esté incompleto.');
+        if (survey === 'censo' && group.count >= target) {
+          add('h3','Tu grupo ya está completo');
+          add('p','La fecha del sorteo se anunciará pronto.');
+        } else {
+          add('h3','Tu grupo se está formando');
+          if (survey === 'censo') add('p',`Faltan ${target - group.count} personas para completar el grupo de ${target}.`);
+          add('p','Publicaremos la fecha del sorteo cuando se complete el grupo. Al finalizar el estudio, el último grupo también participará por S/100 aunque esté incompleto.');
+        }
       } else if (group.state === 'programado') {
         add('h3','Sorteo programado'); add('p', date(group.scheduled_at));
         add('p','Premio: S/100. No necesitas conectarte para participar.');
