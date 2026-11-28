@@ -1,13 +1,18 @@
 {
   "schema": 1,
   "survey": "qr",
-  "updated_at": "2026-11-25T16:58:12-05:00",
+  "updated_at": "2026-11-28T02:52:17-05:00",
   "tickets": {
-    "c49d4e67199462c3ea9994710e50a1a9ac82bb1272df97ea5ea0b11e8818a9ec": "QR-0001"
+    "c49d4e67199462c3ea9994710e50a1a9ac82bb1272df97ea5ea0b11e8818a9ec": "QR-0001",
+    "627e0fc2f14010f302760557274466055c9396791578360d5703c09a6e607c4f": "QR-0001",
+    "01c43aab008f2ece4d1e8504e682e9f27b342229319f7392fbb3639b2ae999fa": "QR-0001",
+    "67f20cf7ee423672bd921cbd85e9793bed42027a84d25f01af9ca99339aa27bd": "QR-0001",
+    "671fe1489b8cb42da209d7f96788c3d6f16348afed9faa24d18ebf589206713e": "QR-0001",
+    "9e40f4f71621fc2907b14ee16e676c6d324d0ac12a42e00fb401f2cb7eb844ae": "QR-0001"
   },
   "groups": {
     "QR-0001": {
-      "count": 1,
+      "count": 6,
       "state": "preparacion"
     }
   }
